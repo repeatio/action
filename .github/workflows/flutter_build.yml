@@ -28,9 +28,3 @@ jobs:
         with:
           name: ${{env.name}}
           path: ${{env.path}}
-
-
-
-
-  upload:
-    needs: build
