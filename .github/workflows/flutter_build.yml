@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest #windows-latest
+    runs-on: ubuntu-latest #windows-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -14,12 +14,16 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable' # optional, default to: 'stable'
 
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: flutter config --enable-windows-desktop
+      - run: flutter channel master
+      - run: flutter upgrade
       - run: flutter pub get
       # skip test
+      - name: SSH connection to Actions
+        uses: repeatio/debugger-action@master
       - run: flutter build windows
 
       #flutter build apk 输出
