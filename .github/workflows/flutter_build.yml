@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest #windows-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -20,8 +20,10 @@ jobs:
 
       - run: flutter pub get
       # skip test
-      - name: Setup Debug Session
-        uses: repeatio/debugger-action@master
+      - run: flutter build windows
+
+      #flutter build apk 输出
+      #Built build/app/outputs/apk/release/app-release.apk (17.4MB).
 
       - if: success()
         uses: actions/upload-artifact@v1
