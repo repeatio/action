@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest #windows-latest
+    runs-on: windows-latest #windows-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -22,8 +22,6 @@ jobs:
       - run: flutter upgrade
       - run: flutter pub get
       # skip test
-      - name: SSH connection to Actions
-        uses: repeatio/debugger-action@master
       - run: flutter build windows
 
       #flutter build apk 输出
