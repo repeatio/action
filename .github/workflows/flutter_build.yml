@@ -10,22 +10,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: repeatio/flutter-tetris
-      # apk 才要装 java吧？
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
       # skip test
-      - name: Setup Debug Session
-        uses: repeatio/debugger-action@master
-
-      #flutter build apk 输出
+      - run: flutter build apk
       #Built build/app/outputs/apk/release/app-release.apk (17.4MB).
-
       - if: success()
         uses: actions/upload-artifact@v1
         with:
-          name: ${{env.name}}
-          path: ${{env.path}}
+          name: app-release.apk
+          path: build/app/outputs/apk/release/app-release.apk
