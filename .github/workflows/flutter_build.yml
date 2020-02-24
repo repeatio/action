@@ -1,0 +1,36 @@
+name: Flutter Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          repository: repeatio/flutter-tetris
+      # apk 才要装 java吧？
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable' # optional, default to: 'stable'
+
+      - run: flutter pub get
+      # skip test
+      - name: Setup Debug Session
+        uses: repeatio/debugger-action@master
+
+      - if: success()
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{env.name}}
+          path: ${{env.path}}
+
+
+
+
+  upload:
+    needs: build
